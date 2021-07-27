@@ -4,9 +4,9 @@ import {
   StyleSheet,
   View,
   Text,
-  StatusBar,
   TextInput,
   Button,
+  TouchableOpacity,
 } from 'react-native';
 import { RadioButton }  from 'react-native-paper';
 import {Formik, Field} from 'formik';
@@ -18,10 +18,11 @@ import signUpValidationSchema from '../schema/RegisterSchema';
 const RegisterScreen = (props) => {
   return (
     <>
-      <StatusBar barStyle="dark-content" />
       <SafeAreaView style={styles.container}>
         <View style={styles.signupContainer}>
-          <Text>Register your Account</Text>
+          <Text style={styles.headerOuterText}>
+            Sign<Text style={styles.headerInnerText}>up</Text>
+          </Text>
           <Formik
             initialValues={{
               fullName: '',
@@ -85,31 +86,28 @@ const RegisterScreen = (props) => {
                        value={values.gender}
                        >
                     <View style={styles.radioContainer}>
-                      <View>
-                         <Text>Male</Text>
+                      <View style={styles.radioButton}>
+                         <Text style={styles.radioText}>Male</Text>
                          <RadioButton value='Male'></RadioButton>
                       </View>
-                      <View>
-                         <Text>Female</Text>
+                      <View style={styles.radioButton}>
+                         <Text style={styles.radioText}>Female</Text>
                          <RadioButton value='Female'></RadioButton>
                       </View>
                     </View>
                   </RadioButton.Group>
                 </View>
                 <View style={styles.buttonContainer}>
-                  <View>
-                    <Button
-                      onPress={handleSubmit}
-                      title="Register"
-                      disabled={!isValid}
-                    />
-                  </View>
-                  <View>
-                    <Button
-                      onPress={() => {props.navigation.navigate('Users')}}
-                      title="View Users"
-                    />
-                  </View>
+                  <TouchableOpacity onPress={handleSubmit} disabled={!isValid}>
+                    <View style={styles.signUpButton}>
+                      <Text style={styles.buttonText}>SIGN UP</Text>
+                    </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => {props.navigation.navigate('Sign In')}}>
+                    <View style={styles.signInButton}>
+                      <Text style={styles.signInNavigateText}>I Already Have An Account</Text>
+                    </View>
+                  </TouchableOpacity>
                 </View>
               </>
             )}
@@ -123,24 +121,55 @@ const RegisterScreen = (props) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   signupContainer: {
-    width: '80%',
+    width: '84%',
     alignItems: 'center',
-    backgroundColor: 'white',
-    padding: 10,
-    elevation: 10,
-    backgroundColor: '#e6e6e6',
+    backgroundColor: '#f1f1f3',
+    paddingHorizontal: 0,
+    paddingVertical: 35,
   },
   radioContainer: {
     flexDirection: 'row',
   },
+  radioButton: {
+    paddingHorizontal: 20,
+  },
+  radioText: {
+    color: 'grey',
+  },
   buttonContainer: {
     width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+    marginVertical: 20,
+  },
+  headerInnerText: {
+    color: '#68cac9',
+  },
+  headerOuterText: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    marginVertical: 30,
+  },
+  signUpButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#68cac9',
+    height: 48,
+    borderRadius: 30,
+  },
+  signInButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 12,
+  },
+  signInNavigateText: {
+    color: 'grey',
+    fontSize: 15,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
   }
 });
 

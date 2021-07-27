@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, View, Text, StyleSheet, FlatList, Image,Dimensions} from 'react-native';
+import {Button, View, Text, StyleSheet, FlatList, Image, Dimensions, TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const {width} = Dimensions.get('window');
@@ -29,10 +29,18 @@ const UserListScreen = props => {
           style={styles.image}
           source={{ uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80' }}
         />
-        <View style={styles.content}>
-          <Text style={styles.fullName}>{item.fullName}</Text>
-          <Text>{item.phoneNumber}</Text>
-        </View>
+        <TouchableOpacity onPress={() => { 
+          props.navigation.navigate('User Detail', {
+            fullName: item.fullName,
+            email: item.email,
+            phone: item.phoneNumber,
+          }) 
+        }}>
+          <View style={styles.content}>
+            <Text style={styles.fullName}>{item.fullName}</Text>
+            <Text>{item.phoneNumber}</Text>
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }
